@@ -24,7 +24,7 @@ module.exports = React.createClass({
   },
   renderTime: function() {
     return this.state.time.map(function(topic){
-      return <Link to={"topics/" + topic.id} className="list-group-item" key={topic.id}>
+      return <Link to={"seat/" + topic.href} className="list-group-item" key={topic.id}>
         <h4>{topic.date}</h4>
         <p>{topic.time}</p>
         <p>{topic.href}</p>
