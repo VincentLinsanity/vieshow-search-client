@@ -8,10 +8,12 @@ module.exports = Reflux.createStore({
     return Api.get('vieshow/movieList/' + cinemaId)
       .then(function(json){
         this.movies = json.data;
+        this.title = json.title;
+        this.cinemaList = json.cinemaList;
         this.triggerChange();
       }.bind(this));
   },
   triggerChange: function() {
-    this.trigger('change', this.movies);
+    this.trigger('change', this.movies, this.title, this.cinemaList);
   }
 });

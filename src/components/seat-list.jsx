@@ -9,21 +9,22 @@ module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(seatStore, 'onChange')
   ],
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       seat: ''
     }
   },
-  componentWillMount: function() {
-    Actions.getSeat(this.props.params.href);
+  componentWillMount: function () {
+    Actions.getSeat(this.props.href);
   },
-  render: function() {
+  render: function () {
     return (
-        <div className="content" dangerouslySetInnerHTML={{__html: this.state.seat}}></div>
+      <div className="content"
+        dangerouslySetInnerHTML={{ __html: this.state.seat }}>
+      </div>
     );
   },
-  onChange: function(event, seat) {
-    this.setState({seat: seat});
-    console.log(this.state.seat);
+  onChange: function (event, seat) {
+    this.setState({ seat: seat });
   }
 });

@@ -15,28 +15,19 @@ module.exports = React.createClass({
     }
   },
   componentWillMount: function() {
-    Actions.getTopics();
+    // Actions.getTopics();
   },
   render: function() {
     return <nav className="navbar navbar-default header">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
-          Imgur Browser
+          Vieshow Search
         </Link>
         <ul className="nav navbar-nav navbar-right">
-          {this.renderTopics()}
+          
         </ul>
       </div>
     </nav>
-  },
-  renderTopics: function() {
-    return this.state.topics.slice(0, 4).map(function(topic){
-      return <li key={topic.id}>
-        <Link activeClassName="active" to={"topics/" + topic.id}>
-          {topic.name}
-        </Link>
-      </li>
-    });
   },
   onChange: function(event, topics) {
     this.setState({

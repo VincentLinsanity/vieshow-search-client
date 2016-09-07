@@ -9,28 +9,48 @@ module.exports = React.createClass({
   mixins: [
     Reflux.listenTo(movieStore, 'onChange')
   ],
-  getInitialState: function() {
+  getInitialState: function () {
     return {
-      movies: []
+      movies: [],
+      title: '',
+      cinemaList: [],
     }
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     Actions.getMovies(this.props.params.id);
   },
-  render: function() {
-    return <div className="list-group">
-      {this.renderMovies()}
-    </div>
+  render: function () {
+    return (<div className="list-group">
+    <h2>{this.state.title}</h2>
+      <select id="lang" onChange={this.handleSelect} value={this.state.title}>
+        {this.renderCinema() }
+      </select>
+      <div>
+      {this.renderMovies() }
+      </div>
+    </div>)
   },
-  renderMovies: function() {
-    return this.state.movies.map(function(topic){
+  renderCinema: function () {
+    return this.state.cinemaList.map(function (topic) {
+      return <option value={topic.id}>{topic.title}</option>
+    });
+  },
+  handleSelect: function (event) {
+    Actions.getMovies(event.target.value);
+  },
+  renderMovies: function () {
+    return this.state.movies.map(function (topic) {
       return <Link to={"time/" + topic.movieHref} className="list-group-item" key={topic.movieHref}>
         <h4>{topic.movieName}</h4>
         <p>{topic.movieHref}</p>
       </Link>
     });
   },
-  onChange: function(event, movies) {
-    this.setState({movies: movies});
+  onChange: function (event, movies, title, cinemaList) {
+    this.setState({
+      movies: movies,
+      title: title,
+      cinemaList: cinemaList
+    });
   }
 });

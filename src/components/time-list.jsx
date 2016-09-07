@@ -3,35 +3,65 @@ var Actions = require('../actions');
 var timeStore = require('../stores/time-store');
 var Reflux = require('reflux');
 var ReactRouter = require('react-router');
-var Link = ReactRouter.Link;
+var Collapse = require('./collapse');
 
 module.exports = React.createClass({
   mixins: [
-    Reflux.listenTo(timeStore, 'onChange')
+    Reflux.listenTo(timeStore, 'onChange'),
   ],
-  getInitialState: function() {
+  getInitialState: function () {
     return {
-      time: []
+      times: [],
+      select: false,
     }
   },
-  componentWillMount: function() {
+  componentWillMount: function () {
     Actions.getTime(this.props.params.id);
   },
-  render: function() {
-    return <div className="list-group">
-      {this.renderTime()}
+  render: function () {
+    return (<div>
+      <select id="lang" onChange={this.handleSelect}>
+        <option value={'select date'}>{'select date'}</option>
+        {this.renderDate() }
+      </select>
+      <div>
+        {this.renderCollapse() }
+      </div>
     </div>
+    )
   },
-  renderTime: function() {
-    return this.state.time.map(function(topic){
-      return <Link to={"seat/" + topic.href} className="list-group-item" key={topic.id}>
-        <h4>{topic.date}</h4>
-        <p>{topic.time}</p>
-        <p>{topic.href}</p>
-      </Link>
+  renderDate: function () {
+    return this.state.times.map(function (topic) {
+      var value = topic.date + ' ' + topic.time;
+      return <option value={topic.date}>{value}</option>
     });
   },
-  onChange: function(event, time) {
-    this.setState({time: time});
-  }
+  handleSelect: function (event) {
+    var newTimes = [];
+    this.state.times.map(function (topic) {
+      if (event.target.value == topic.date) {
+        newTimes.push(topic);
+      }
+    });
+    this.setState({time: newTimes});
+    console.log(newTimes);
+    console.log(this.state.time);
+    //this.setState({select: true});
+  },
+  renderCollapse: function () {
+    if (!this.state.select) {
+      return 'empty';
+    }
+    return this.state.times.map((topic, index) => {
+      if (index == 1) {
+        index = 'one';
+      }
+      return (<nav className="navbar navbar-default header">
+        <Collapse date={topic.date} time={topic.time} key={index}
+          href={topic.href} index={index}/></nav>)
+    })
+  },
+  onChange: function (event, times) {
+    this.setState({ times: times });
+  },
 });
