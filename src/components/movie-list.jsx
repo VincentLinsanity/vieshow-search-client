@@ -39,8 +39,10 @@ module.exports = React.createClass({
     Actions.getMovies(event.target.value);
   },
   renderMovies: function () {
-    return this.state.movies.map(function (topic) {
-      return <Link to={"time/" + topic.movieHref} className="list-group-item" key={topic.movieHref}>
+    return this.state.movies.map((topic) => {
+      return <Link to={"time/" + topic.movieHref + "/" + 
+      topic.movieName + "/" + this.state.title} 
+      className="list-group-item" key={topic.movieHref}>
         <h4>{topic.movieName}</h4>
         <p>{topic.movieHref}</p>
       </Link>

@@ -7,11 +7,12 @@ module.exports = Reflux.createStore({
   getSeat: function(href) {
     return Api.get('vieshow/seat/' + href)
       .then(function(json){
-        this.body = json.data;
+        this.data = json.data;
+        this.href = json.href
         this.triggerChange();
       }.bind(this));
   },
   triggerChange: function() {
-    this.trigger('change', this.body);
+    this.trigger('change', this.data, this.href);
   }
 });

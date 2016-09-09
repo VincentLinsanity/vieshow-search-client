@@ -6,25 +6,14 @@ var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 
 module.exports = React.createClass({
-  mixins: [
-    Reflux.listenTo(seatStore, 'onChange')
-  ],
-  getInitialState: function () {
-    return {
-      seat: ''
-    }
-  },
   componentWillMount: function () {
     Actions.getSeat(this.props.href);
   },
   render: function () {
     return (
-      <div className="content"
-        dangerouslySetInnerHTML={{ __html: this.state.seat }}>
+      <div className="content" id={this.props.href}
+        dangerouslySetInnerHTML={{ __html: this.props.seat }}>
       </div>
     );
   },
-  onChange: function (event, seat) {
-    this.setState({ seat: seat });
-  }
 });

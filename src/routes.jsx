@@ -13,7 +13,7 @@ module.exports = (
   <Router history={new HashHistory}>
     <Route path="/" component={Main}>
       <Route path="movies/:id" component={movieList} />
-      <Route path="time/:id" component={timeList} />
+      <Route path="time/:id/:name/:cinema" component={timeList} />
       <Route path="seat/:href" component={seatList} />
     </Route>
   </Router>
