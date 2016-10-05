@@ -24,16 +24,23 @@ module.exports = React.createClass({
   },
   render: function () {
     return (<div>
-    <p>{this.props.params.name + this.props.params.cinema}</p>
+      <h3>{this.props.params.cinema}</h3>
+      <h4>{this.props.params.name}</h4>
       <select id="lang" onChange={this.handleSelect}>
         <option value={'select date'}>{'select date'}</option>
         {this.renderDate() }
       </select>
+      <h5>
+      <button type="button" className="btn btn-info" 
+      onClick={this.handleClear}>Clear</button></h5>
       <div>
         {this.renderCollapse() }
       </div>
     </div>
     )
+  },
+  handleClear: function() {
+    Actions.clearStore();
   },
   renderDate: function () {
     var value = '';
@@ -50,12 +57,12 @@ module.exports = React.createClass({
         newTimes.push(topic);
       }
     });
-    this.setState({newTimes: newTimes});
-    this.setState({select: true});
+    this.setState({ newTimes: newTimes });
+    this.setState({ select: true });
   },
   renderCollapse: function () {
     if (!this.state.select) {
-      return 'empty';
+      return '';
     }
     return this.state.newTimes.map((topic, index) => {
       if (index == 1) {
@@ -76,12 +83,12 @@ module.exports = React.createClass({
   onChange: function (event, times) {
     this.setState({ times: times });
   },
-  onSeatChange: function(event, seat, href) {
+  onSeatChange: function (event, seat, href) {
     var seatObj = {
       seat: seat,
       href: href
     }
     this.state.seats.push(seatObj);
-    this.setState({seats: this.state.seats});
+    this.setState({ seats: this.state.seats });
   }
 });

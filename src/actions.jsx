@@ -4,5 +4,6 @@ module.exports = Reflux.createActions([
   'getTopics',
   'getMovies',
   'getTime',
-  'getSeat'
+  'getSeat',
+  'clearStore'
 ]);

@@ -2,16 +2,25 @@ var React = require('react');
 var SeatList = require('./seat-list');
 
 module.exports = React.createClass({
+  getInitialState: function () {
+    return {
+      show: 'Show seat',
+    }
+  },
   render: function () {
     return (
       <div className="container" id={this.props.href}>
         <h2>{this.props.date}</h2>
         <p>{this.props.time}</p>
-        <button type="button" className="btn btn-info"
-          data-toggle="collapse" data-target={"#" + this.props.index}>Simple collapsible</button>
+        <button type="button" className="btn btn-info" onClick={this.handleClick()}
+          data-toggle="collapse" data-target={"#" + this.props.index}>
+          {this.state.show}</button>
         {this.renderSeat() }
       </div>
     );
+  },
+  handleClick() {
+    this.state
   },
   renderSeat() {
     return (

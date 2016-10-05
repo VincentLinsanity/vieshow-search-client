@@ -4,6 +4,9 @@ var Actions = require('../actions');
 
 module.exports = Reflux.createStore({
   listenables: [Actions],
+  clearStore: function() {
+    return Api.get('vieshow/clear');
+  },
   getSeat: function(href) {
     return Api.get('vieshow/seat/' + href)
       .then(function(json){
